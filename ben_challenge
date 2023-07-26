@@ -1,0 +1,52 @@
+def valid(num):
+    num = list(num)
+    if not check_number(num):
+        return 'Invalid'
+    if int(num[0]) < 4 or int(num[0]) > 6:
+        return 'Invalid'
+    if len(num) < 16:
+        return 'Invalid'
+    if len(num) > 16:
+        if len(num) > 19:
+            return 'Invalid'
+        else:
+            for k in range(4, 16, 5):
+                if num[k] != '-':
+                    return 'Invalid'
+    if check_repeat(num):
+        return 'Invalid'
+    return 'Valid'
+
+def check_number(list):
+    nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-']
+    for i in range(len(list)):
+        if list[i] not in nums:
+            return False
+    return True
+
+def check_repeat(list):
+    score = 0
+    for i in range(len(list)):
+        if list[i] == '-':
+            if list[i+1] == list[i - 2]:
+                score += 1
+                i += 2
+            else:
+                score = 1
+        else:
+            if list[i-1] != '-':
+                if list[i] == list[i - 1]:
+                    score += 1
+                else:
+                    score = 1
+        if score >= 4:
+            return True
+    return False
+
+if __name__ == '__main__':
+    N = int(input(''))
+    card_num_value = []
+    for i in range(N):
+        card_num_value.append(valid(input('')))
+    for j in card_num_value:
+        print(j)
